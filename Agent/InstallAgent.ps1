@@ -192,7 +192,7 @@ if ($DebugMode.IsPresent) {
     Remove-Module InstallAgent-Core
   }
   $AgentRegPath = "HKLM:\SOFTWARE\Solarwinds MSP Community\InstallAgent"
-  if (Test-Path $AgentRegPath){
+  if (Test-Path $AgentRegPath) {
     Remove-Item $AgentRegPath -Recurse -Force
   }
 }
@@ -581,7 +581,7 @@ $SC.Paths.Old = @{
 }
 
 function GetCustomInstallMethods {
-# An empty function for a partner to override and update/insert custom install information
+  # An empty function for a partner to override and update/insert custom install information
 }
 
 
@@ -699,11 +699,11 @@ if (
   if ((Test-Path $Script.Results.ScriptEventKey) -eq $false)
   { New-EventLog -Source $Script.Results.ScriptSource -LogName $Script.Results.EventLog }
   # Write the Event
-  $Message = (
-    "Another Instance of the " + $SC.Names.ScriptProduct + " is currently in progress. " +
-    "Please review the status of the current Instance by opening the Registry to [" +
-    $Script.Results.ScriptKey + "].`n"
-  )
+  $Message = @"
+    Another Instance of the $($SC.Names.ScriptProduct) is currently in progress.
+    Please review the status of the current Instance by opening the Registry to [$($Script.Results.ScriptKey)].
+"@
+
   Write-EventLog -LogName $Script.Results.EventLog -Source $Script.Results.ScriptSource -EventID 9999 -EntryType "Error" -Message $Message -Category 0
   # Cleanup Working Folder
   Remove-Item c -Force -Recurse 2>$null
@@ -739,10 +739,10 @@ ForEach-Object {
     if ((Test-Path $Script.Results.ScriptEventKey) -eq $false)
     { New-EventLog -Source $Script.Results.ScriptSource -LogName $Script.Results.EventLog }
     # Write the Event
-    $Message = (
-      "The Function Library for the " + $SC.Names.ScriptProduct + " is either missing or corrupt. " +
-      "Please verify " + $ModuleName + " exists in the [" + $Script.Path.Library + "] folder, or restore the file to its original state.`n"
-    )
+    $Message = @"
+The Function Library for the $($SC.Names.ScriptProduct) is either missing or corrupt.
+Please verify $ModuleName exists in the [$($Script.Path.Library)] folder, or restore the file to its original state.
+"@
     Write-EventLog -LogName $Script.Results.EventLog -Source $Script.Results.ScriptSource -EventID 9999 -EntryType "Error" -Message $Message -Category 0
     # Update Execution Properties
     $Script.Execution.Keys |

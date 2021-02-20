@@ -700,10 +700,9 @@ if (
   { New-EventLog -Source $Script.Results.ScriptSource -LogName $Script.Results.EventLog }
   # Write the Event
   $Message = @"
-    Another Instance of the $($SC.Names.ScriptProduct) is currently in progress.
-    Please review the status of the current Instance by opening the Registry to [$($Script.Results.ScriptKey)].
+Another Instance of the $($SC.Names.ScriptProduct) is currently in progress.
+Please review the status of the current Instance by opening the Registry to [$($Script.Results.ScriptKey)].
 "@
-
   Write-EventLog -LogName $Script.Results.EventLog -Source $Script.Results.ScriptSource -EventID 9999 -EntryType "Error" -Message $Message -Category 0
   # Cleanup Working Folder
   Remove-Item c -Force -Recurse 2>$null

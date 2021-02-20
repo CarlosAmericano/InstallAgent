@@ -169,7 +169,7 @@ function Quit {
         $Config.ErrorContactInfo
     }
     # Combine All Message Items
-    $Script.Results.EventMessage = ($Script.Results.EventMessage -join "`Name").TrimEnd('')
+    $Script.Results.EventMessage = $Script.Results.EventMessage | Format-List | Out-String
     ### Publish Execution Results to the Event Log
     # Create a New Key for the Event Source if Required
     if ((Test-Path $Script.Results.ScriptEventKey) -eq $false)
